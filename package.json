@@ -1,0 +1,25 @@
+{
+  "name": "jarvis-covidgermany",
+  "version": "1.0.0",
+  "description": "A discord bot for information about the current covid situation in germany",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Toasty65/Jarvis-CovidGermany.git"
+  },
+  "keywords": [
+    "discord.js"
+  ],
+  "author": "Toasty65",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Toasty65/Jarvis-CovidGermany/issues"
+  },
+  "homepage": "https://github.com/Toasty65/Jarvis-CovidGermany#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3"
+  }
+}
