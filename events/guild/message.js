@@ -52,7 +52,7 @@ module.exports = (Discord, client, message) => {
 	const cmd = args.shift().toLowerCase();
 	const command = message.client.commands.get(cmd);
 
-	if(!command) return message.reply(`"${content}" ist kein gültiger Befehl!`);
+	if(!command) return;
 
 	let {
 		permissions = [],

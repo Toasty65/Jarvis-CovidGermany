@@ -1,4 +1,4 @@
 module.exports = client => {
-	client.user.setActivity('Diener');
+	client.user.setActivity(`Prefix = '${process.env.PREFIX}'`, { type: 'WATCHING'});
 	console.log('Bot ist online!');
 };

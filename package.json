@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Toasty65/Jarvis-CovidGermany#readme",
   "dependencies": {
-    "discord.js": "^12.5.3"
+    "discord.js": "^12.5.3",
+    "dotenv": "^8.2.0"
   }
 }
