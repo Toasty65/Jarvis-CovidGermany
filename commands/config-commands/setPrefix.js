@@ -3,34 +3,35 @@ const prefixSchema = require('../../schemas/prefix-schema');
 const { cache } = require('../../events/guild/message');
 
 module.exports = {
-    name: 'setprefix',
-    guildOnly: true,
-    minArgs: 0,
-    maxArgs: 1,
-    expectedArgs: '<prefix>',
-    permissions: 'ADMINISTRATOR',
-    execute: async (message, args) => {
-        const { guild } = message;
-        let prefix = '.';
+	name: 'setprefix',
+	guildOnly: true,
+	minArgs: 0,
+	maxArgs: 1,
+	expectedArgs: '<prefix>',
+	permissions: 'ADMINISTRATOR',
+	execute: async (message, args) => {
+		const { guild } = message;
+		let prefix = '.';
 
-        if(args[0] && args[0].length === 1) prefix = args[0];
+		if(args[0] && args[0].length === 1) prefix = args[0];
 
-        await mongo().then(async mongoose => {
-            try {
-                await prefixSchema.findOneAndUpdate({
-                    _id: guild.id,
-                }, {
-                    _id: guild.id,
-                    prefix,
-                }, {
-                    upsert: true,
-                });
+		await mongo().then(async mongoose => {
+			try {
+				await prefixSchema.findOneAndUpdate({
+					_id: guild.id,
+				}, {
+					_id: guild.id,
+					prefix,
+				}, {
+					upsert: true,
+				});
 
-                cache[guild.id] = [prefix];
+				cache[guild.id] = [prefix];
 
-            } finally {
-                mongoose.connection.close();
-            }
-        })
-    }
-}
+			}
+			finally {
+				mongoose.connection.close();
+			}
+		});
+	},
+};
