@@ -64,7 +64,8 @@ module.exports = async (Discord, client, message) => {
 					cache[guild.id] = data = ['.'];
 				}
 
-			} finally {
+			}
+			finally {
 				mongoose.connection.close();
 			}
 		});
@@ -127,7 +128,7 @@ module.exports = async (Discord, client, message) => {
 			missingRole = requiredRole;
 		}
 	}
-	
+
 	if(roleCount === 0 && requiredRoles.length > 0) {
 		return message.reply(
 			`Du benötigst die "${missingRole}" Rolle um diesen Befehl zu benutzen!`,
