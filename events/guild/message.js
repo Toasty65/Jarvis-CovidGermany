@@ -1,5 +1,7 @@
 require('dotenv').config();
-const prefix = process.env.PREFIX;
+const mongo = require('../../util/mongo');
+const prefixSchema = require('../../schemas/prefix-schema');
+const cache = {};
 
 const validatePermissions = (permissions) => {
 	const validPermissions = [
@@ -38,17 +40,42 @@ const validatePermissions = (permissions) => {
 
 	for (const permission of permissions) {
 		if (!validPermissions.includes(permission)) {
-			// throw new Error(`Unknown permission node "${permission}"`);
+			throw new Error(`Unknown permission node "${permission}"`);
 		}
 	}
 };
 
-module.exports = (Discord, client, message) => {
+module.exports = async (Discord, client, message) => {
 	const { member, content, guild } = message;
 
-	if(!content.startsWith(prefix) || message.author.bot) return;
+	let data = cache[guild.id];
 
-	const args = content.slice(prefix.length).split(/ +/);
+	if(!data) {
+		console.log('Fetching prefix from database!');
+
+		await mongo().then(async mongoose => {
+			try {
+				const result = await prefixSchema.findById(guild.id);
+
+				if(result) {
+					cache[guild.id] = data = [result.prefix];
+				}
+				else {
+					cache[guild.id] = data = ['.'];
+				}
+
+			} finally {
+				mongoose.connection.close();
+			}
+		});
+	}
+
+	const serverPrefix = data[0];
+
+	if(!content.startsWith(serverPrefix) || message.author.bot) return;
+
+
+	const args = content.slice(serverPrefix.length).split(/ +/);
 	const cmd = args.shift().toLowerCase();
 	const command = message.client.commands.get(cmd);
 
@@ -112,15 +139,16 @@ module.exports = (Discord, client, message) => {
 		args.length < minArgs || (maxArgs !== null && args.length > maxArgs)
 	) {
 		return message.reply(
-			`Falscher Syntax! Versuche ${prefix}${command.name} ${expectedArgs}`,
+			`Falscher Syntax! Versuche ${serverPrefix}${command.name} ${expectedArgs}`,
 		);
 	}
 
-	message.channel.bulkDelete(1).catch(err => {
-		console.error(err);
-		message.channel.send('Beim löschen des eingegebenen Befehls ist ein Fehler aufgetreten');
-	})
-	.then(message.channel.startTyping())
-	.then(execute(message, args, Discord, client))
-	.then(message.channel.stopTyping());
+	message.delete()
+		.then(() => {
+			message.channel.startTyping();
+			execute(message, args, Discord, client);
+		})
+		.then(() => message.channel.stopTyping(true));
 };
+
+module.exports.cache = cache;
