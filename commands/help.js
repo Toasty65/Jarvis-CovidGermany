@@ -43,6 +43,7 @@ module.exports = {
 		const helpEmbed = {
 			color: 0x1E92F4,
 			title: 'Available commands:',
+			url: 'https://top.gg/bot/835889285055905803',
 			description: '**Prefix**:\n`' + prefix + '`',
 			author: {
 				name: client.user.username,
