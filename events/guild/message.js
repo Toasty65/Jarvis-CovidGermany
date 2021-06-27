@@ -113,14 +113,20 @@ module.exports = async (Discord, client, message) => {
 		);
 	}
 
+	message.channel.startTyping();
+
 	if(guild.me.hasPermission('MANAGE_MESSAGES')) {
 		message.delete()
 			.then(() => {
-				message.channel.startTyping();
 				execute(message, args, Discord, client);
 			})
 			.then(() => message.channel.stopTyping(true));
+		return;
 	}
+
+	execute(message, args, Discord, client);
+	message.channel.stopTyping(true);
+
 };
 
 module.exports.cache = cache;
