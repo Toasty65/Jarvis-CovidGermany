@@ -78,7 +78,7 @@ module.exports = {
 			}
 
 			const coronaIconUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Coronavirus_icon.svg/1024px-Coronavirus_icon.svg.png';
-			const api = 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json';
+			const api = 'https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=Fallzahl,Death,cases7_bl_per_100k,faelle_100000_EW,LAN_ew_GEN,Aktualisierung&outSR=4326&f=json';
 
 			await fetch(api)
 				.then(res => res.json())
