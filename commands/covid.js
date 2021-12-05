@@ -97,7 +97,7 @@ module.exports = {
 					Fallzahl = '~ ' + Intl.NumberFormat().format(Math.round(Fallzahl));
 					Death = '~ ' + Intl.NumberFormat().format(Math.round(Death));
 					Aktualisierung = new Date(Aktualisierung);
-					Aktualisierung = `${Aktualisierung.getDate()}.${Aktualisierung.getMonth()}.${Aktualisierung.getFullYear()}`;
+					Aktualisierung = `${Aktualisierung.getDate()}.${Aktualisierung.getMonth() + 1}.${Aktualisierung.getFullYear()}`;
 
 					const covidEmbed = {
 						color: 0xDC143C,
