@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongoPath = `mongodb+srv://admin:${process.env.MONGODBPASSWORD}@cluster0.u8ejt.mongodb.net/${process.env.DATABASENAME}?retryWrites=true&w=majority`
+const mongoPath = `mongodb+srv://admin:${process.env.MONGODBPASSWORD}@cluster0.u8ejt.mongodb.net/${process.env.DATABASENAME}?retryWrites=true&w=majority`;
 
 module.exports = async () => {
     await mongoose.connect(mongoPath, {
@@ -8,4 +8,4 @@ module.exports = async () => {
     }).catch(err => console.log('An error has occured while connecting to the database:\n' + err));
 
     return mongoose;
-}
+};
